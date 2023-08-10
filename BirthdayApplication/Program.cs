@@ -10,6 +10,8 @@ namespace BirthdayApplication
             Console.WriteLine("Enter your birthday in M/DD/YY format");
             string birthdayString = Console.ReadLine();
             DateTime birthday = StringToDateConverter(birthdayString);
+            HowManyDaysOld(birthday);
+            HowManyMonthsOld(birthday);
 
             Console.ReadLine();
         }
@@ -43,11 +45,21 @@ namespace BirthdayApplication
                     years -= 1;
                 }
             }
+            Console.WriteLine($"You are {years} years old.");
         }
 
         private static void HowManyMonthsOld(DateTime birthday)
         {
             DateTime now = DateTime.Now;
+            int months = (now.Year - birthday.Year) * 12;
+            months += now.Month - birthday.Month; // add the difference in months
+
+            // if the birthday hasn't occurred yet this month, subtract one month
+            if (now.Day < birthday.Day)
+            {
+                months--;
+            }
+            Console.WriteLine($"You are {months} months old");
         }
 
         private static void HowManyDaysOld(DateTime birthday)
