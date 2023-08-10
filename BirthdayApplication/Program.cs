@@ -10,22 +10,35 @@ namespace BirthdayApplication
             Console.WriteLine("Enter your birthday in M/DD/YY format");
             string birthdayString = Console.ReadLine();
             DateTime birthday = StringToDateConverter(birthdayString);
-            HowManyYearsOld(birthday);
-            HowManyMonthsOld(birthday);
-            HowManyDaysOld(birthday);
-            CalculateNextBirthdayDays(birthday);
+
+            if (birthday != DateTime.MinValue) // Check for the sentinel value
+            {
+                HowManyYearsOld(birthday);
+                HowManyMonthsOld(birthday);
+                HowManyDaysOld(birthday);
+                CalculateNextBirthdayDays(birthday);
+            }
+
             Console.ReadLine();
         }
 
         private static DateTime StringToDateConverter (string str)
         {
-            if(DateTime.TryParseExact(str, "M/dd/yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthday))
+            try
             {
-                return birthday;
+                if (DateTime.TryParseExact(str, "M/dd/yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime birthday))
+                {
+                    return birthday;
+                }
+                else
+                {
+                    throw new FormatException("Invalid date time entered. Please enter a valid date format (M/dd/yy).");
+                }
             }
-            else
+            catch (FormatException e)
             {
-                throw new Exception("Please enter a valid date format (M/dd/yy).");
+                Console.WriteLine(e.Message);
+                return DateTime.MinValue; // Return a sentinel value to indicate an error
             }
         }
         private static void HowManyYearsOld(DateTime birthday)
