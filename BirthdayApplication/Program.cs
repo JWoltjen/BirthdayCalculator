@@ -25,7 +25,7 @@ namespace BirthdayApplication
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Please enter a valid date format (M/dd/yy).");
             }
         }
         private static void HowManyYearsOld(DateTime birthday)
