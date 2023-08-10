@@ -12,6 +12,7 @@ namespace BirthdayApplication
             DateTime birthday = StringToDateConverter(birthdayString);
             HowManyDaysOld(birthday);
             HowManyMonthsOld(birthday);
+            HowManyDaysOld(birthday);
 
             Console.ReadLine();
         }
@@ -59,12 +60,16 @@ namespace BirthdayApplication
             {
                 months--;
             }
-            Console.WriteLine($"You are {months} months old");
+            Console.WriteLine($"You are {months} months old.");
         }
 
         private static void HowManyDaysOld(DateTime birthday)
         {
-
+            DateTime now = DateTime.Now;
+            // subtract one dateTime from another gives a timespan
+            TimeSpan difference = now - birthday; 
+            int days = difference.Days;
+            Console.WriteLine($"You are {days} days old.");
         }
 
     }
